@@ -15,7 +15,8 @@ def search_images(start_date, end_date, frametype, filt=None):
     Return the available images in a given day.
     """
 
-    type_id = db(db.frametype.Name == frametype).select(db.frametype.id).first()
+    type_id = db(db.frametype.Name == frametype).select(
+            db.frametype.id).first()
     nimages = 0
     if frametype == "BIAS":
         nimages = db((db.t80oa.ImageType_ID == type_id)
@@ -25,7 +26,7 @@ def search_images(start_date, end_date, frametype, filt=None):
                      (db.t80oa.Date <= end_date)).select(db.t80oa.Name)
         nimages = [img.Name for img in nimages]
     else:
-        if filt != None:
+        if filt is not None:
             filter_id = db(db.filter.Name == filt).select(db.filter.id).first()
             nimages = db((db.t80oa.ImageType_ID == type_id)
                          &
@@ -44,7 +45,9 @@ def count_images(start_date, end_date, frametype, filt=None):
     """
     Return the Number of images in the Pipeline Data Base.
     """
-    type_id = db(db.frametype.Name == frametype).select(db.frametype.id).first()
+    type_id = db(db.frametype.Name == frametype).select(
+            db.frametype.id).first()
+
     nimages = 0
     if frametype == "BIAS":
         nimages = db((db.t80oa.ImageType_ID == type_id)
@@ -53,7 +56,7 @@ def count_images(start_date, end_date, frametype, filt=None):
                      &
                      (db.t80oa.Date <= end_date)).count()
     else:
-        if filt != None:
+        if filt is not None:
             filter_id = db(db.filter.Name == filt).select(db.filter.id).first()
             nimages = db((db.t80oa.ImageType_ID == type_id)
                          &
@@ -65,6 +68,7 @@ def count_images(start_date, end_date, frametype, filt=None):
         else:
             raise NameError("No Filter Passed")
     return nimages
+
 
 if __name__ == "__main__":
     from datetime import datetime
