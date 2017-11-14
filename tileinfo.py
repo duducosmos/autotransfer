@@ -19,5 +19,21 @@ def get_pnames():
     return pname
 
 
-def tile_info(tile):
-    pass
+def tile_info(pname, filt_name):
+    '''
+    Return Tile Info.
+    Input: PNAME
+           filt_name
+    '''
+    query = db((db.t80tiles.pname == pname)
+               &
+               (db.filter.Name == filt_name)
+               )
+    tile_info = query.select(db.t80tilesinfo.id,
+                             db.t80tilesinfo.RefImage_ID,
+                             db.t80tilesinfo.FWHM_Min,
+                             db.t80tilesinfo.FWHM_Max,
+                             db.t80tilesinfo.Filter_ID).first()
+
+    return [tile_info.id, tile_info.RefImage_ID, tile_info.FWHM_Min,
+            tile_info.FWHM_Max, tile_info.id]
