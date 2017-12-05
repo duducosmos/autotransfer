@@ -83,4 +83,5 @@ def tile_info(pname, filt_name):
 
 if __name__ == "__main__":
     # print(get_pnames())
+    print(get_image_for_tiling('HYDRA_0049', 'R'))
     print(tile_info('HYDRA_0049', 'R'))
