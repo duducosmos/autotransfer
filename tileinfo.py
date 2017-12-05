@@ -37,3 +37,7 @@ def tile_info(pname, filt_name):
 
     return [tile_info.id, tile_info.RefImage_ID, tile_info.FWHM_Min,
             tile_info.FWHM_Max, tile_info.id]
+
+
+if __name__ == "__main__":
+    print(tile_info('HYDRA_0049', 'R'))
