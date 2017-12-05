@@ -18,7 +18,7 @@ UpdateTile             :  12
 Complete               :  0
 """
 
-DB_NAME = "hydra0049"
+DB_NAME = "main_survey"
 DB_USER_NAME = "root"
 DB_PASSWORD = ""
 DB_ADDRESS = ""
