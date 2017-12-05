@@ -7,7 +7,6 @@ from model import db
 from jype.tiling.hpix import TileDefinition
 from jype.dbtools.dbqueries import SelectTileImagesByPixels
 
-
 __AUTHOR = "E. S. Pereira"
 __DATE = "10/10/2017"
 __EMAIL = "pereira.somoza@gmail.com"
@@ -33,7 +32,8 @@ def get_image_for_tiling(pname, filt_name):
                                 tile_info.PIXEL_SCALE, tile_info.IMAGE_SIZE
                                 ).pixels
 
-    images = SelectTileImagesByPixels(pixel_tile, FilterName=filt_name)
+    images = SelectTileImagesByPixels(pixel_tile, FilterName=filt_name,
+                                      procmode=True, onlyvalid=True)
     return images
 
 
@@ -83,5 +83,7 @@ def tile_info(pname, filt_name):
 
 if __name__ == "__main__":
     # print(get_pnames())
-    print(get_image_for_tiling('HYDRA_0049', 'R'))
+    tile_images = get_image_for_tiling('HYDRA_0049', 'R')
+    # print(tile_images)
+    print([ti['Name'] for ti in tile_images])
     print(tile_info('HYDRA_0049', 'R'))
