@@ -14,8 +14,8 @@ def get_pnames():
     '''
     Return all PName from t80tiles
     '''
-    pname = db().select(db.t80tiles.PNAME)
-    pname = [pn.pname for pn in pname]
+    pname = db().select(db.t80tiles.PName)
+    pname = [pn.PName for pn in pname]
     return pname
 
 
@@ -25,7 +25,7 @@ def tile_info(pname, filt_name):
     Input: PNAME
            filt_name
     '''
-    query = db((db.t80tiles.pname == pname)
+    query = db((db.t80tiles.PName == pname)
                &
                (db.filter.Name == filt_name)
                )
@@ -40,4 +40,5 @@ def tile_info(pname, filt_name):
 
 
 if __name__ == "__main__":
+    #print(get_pnames())
     print(tile_info('HYDRA_0049', 'R'))
