@@ -18,10 +18,10 @@ UpdateTile             :  12
 Complete               :  0
 """
 
-DB_NAME = "hydra0049"
+DB_NAME = "main_survey"
 DB_USER_NAME = "root"
 DB_PASSWORD = ""
-DB_ADDRESS = ""
+DB_ADDRESS = "127.0.0.1"
 
 COADING_ERROR = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
