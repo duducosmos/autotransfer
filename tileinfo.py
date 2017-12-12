@@ -46,7 +46,6 @@ def get_mjd_for_tiling(pname, filt_name):
     images = [db(db.t80oa.id == primg.ori_id).select(db.t80oa.Date,
                                                      db.t80oa.Time,
                                                      db.t80oa.ExpTime,
-                                                     db.t80oa.Noise
                                                      ).first()
               for primg in proc_images
               ]
@@ -57,7 +56,7 @@ def get_mjd_for_tiling(pname, filt_name):
                        ]
     mjd = Time(image_date_time).mjd
 
-    return [[mjd[i], float(images[i].ExpTime), images[i].Noise]
+    return [[mjd[i], float(images[i].ExpTime)]
             for i in range(len(images))]
 
 
