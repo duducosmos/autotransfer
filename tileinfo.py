@@ -28,7 +28,10 @@ def get_mjd_for_tiling(pname, filt_name):
                              ).first()
 
     query = db(db.t80tileImgs.Tile_ID == tile_info.id)
-    proc_images = query.select(db.rc.ori_id)
+    rcid = query.select(db.t80tileImgs.RC_ID)
+    proc_images = [db(db.rc.id == rcid.RC_ID).select(db.rc.ori_id)
+                   for rcidi in rcid
+                   ]
 
     images = [db(db.t80oa.id == primg.ori_id).select(db.t80oa.Date,
                                                      db.t80oa.Time,
