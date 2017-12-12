@@ -4,17 +4,16 @@
 Get Tile Info from Pipeline Data Base.
 """
 from model import db
-from jype.tiling.hpix import TileDefinition
-from jype.dbtools.dbqueries import SelectTileImagesByPixels
+from astropy.time import Time
 
 __AUTHOR = "E. S. Pereira"
 __DATE = "10/10/2017"
 __EMAIL = "pereira.somoza@gmail.com"
 
 
-def get_image_for_tiling(pname, filt_name):
+def get_mjd_for_tiling(pname, filt_name):
     '''
-    Return a list of image used to produce a tile.
+    Return a list of MJD and Exposure time of image used to produce a tile.
     INPUT: PNAme
            Fileter
     '''
@@ -28,13 +27,23 @@ def get_image_for_tiling(pname, filt_name):
                              db.t80tiles.PIXEL_SCALE, db.t80tiles.IMAGE_SIZE
                              ).first()
 
-    pixel_tile = TileDefinition(tile_info.id, tile_info.RA, tile_info.DEC,
-                                tile_info.PIXEL_SCALE, tile_info.IMAGE_SIZE
-                                ).pixels
+    query = db(db.t80tileImgs.Tile_ID == tile_info.id)
+    proc_images = query.select(db.rc.ori_id)
 
-    images = SelectTileImagesByPixels(pixel_tile, FilterName=filt_name,
-                                      procmode=True, onlyvalid=True)
-    return images
+    images = [db(db.t80oa.id == primg.ori_id).select(db.t80oa.Date,
+                                                     db.t80oa.Time,
+                                                     db.t80oa.ExpTime
+                                                     ).first()
+              for primg in proc_images
+              ]
+
+    image_date_time = ["{0}T{1}".format(img.Date.strftime("%Y-%m-%d"),
+                                        img.Time.strftime("%H:%M:%S"))
+                       for img in images
+                       ]
+    mjd = Time(image_date_time).mjd
+
+    return [[mjd[i], images[i].ExpTime] for i in range(len(images))]
 
 
 def get_pnames():
@@ -83,7 +92,7 @@ def tile_info(pname, filt_name):
 
 if __name__ == "__main__":
     # print(get_pnames())
-    tile_images = get_image_for_tiling('HYDRA_0049', 'R')
+    tile_images = get_mjd_for_tiling('HYDRA_0049', 'R')
     # print(tile_images)
-    print([ti['Name'] for ti in tile_images])
+    print(tile_images)
     print(tile_info('HYDRA_0049', 'R'))
