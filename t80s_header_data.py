@@ -24,10 +24,10 @@ def t80s_header_data(pname, filetype="fz", hdr_pos=0):
 
     for filt in FILTERS:
         img_path = "{0}/{1}/{2}_{1}_swp.{3}".format(tile_path,
-                                                filt,
-                                                pname,
-                                                filetype
-                                                )
+                                                    filt,
+                                                    pname,
+                                                    filetype
+                                                    )
         print("Processing data for img: {0}.".format(img_path))
         print("For filter: {0}.".format(filt))
         id_tilesinfo, ref_image_id, fwhm_min, fwhm_max, filter_id, \
@@ -45,7 +45,6 @@ def t80s_header_data(pname, filetype="fz", hdr_pos=0):
             mjd1_exp, mjd2_exp, mjd3_exp = mjds
 
         data, hdr = fits.getdata(img_path, header=True)
-
 
         hdr['PNAME'] = pname
         hdr['IMAGE_ID'] = id_tilesinfo
@@ -65,10 +64,8 @@ def t80s_header_data(pname, filetype="fz", hdr_pos=0):
         hdr['DEPTH2FWHM5S'] = depth2fwhm5s
         hdr['DEPTH3ARC5S'] = depth3arc5s
         hdr['DEPTHARCSEC2'] = deptharcsec2
-        
+
         fits.writeto(img_path, data, hdr, overwrite=True)
-
-
 
 
 if __name__ == "__main__":
