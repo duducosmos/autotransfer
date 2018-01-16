@@ -79,6 +79,8 @@ def get_zp(id_tilesinfo):
                            db.calib_zp_tiles.err_zp,
                            db.calib_zp_tiles.calib_procedure,
                            ).first()
+    if zp_info is None:
+        return [None, None, None]
     return [zp_info.zp, zp_info.err_zp, zp_info.calib_procedure]
 
 
@@ -92,6 +94,8 @@ def get_depth2fwhm5s(pname, filt_name):
     tile = get_tile(pname, filt_name)
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
+    if zp[0] is None:
+        return None
 
     # It is necessary verify if the correct noise is from t80tilesinf table
     noise = info[-1]
@@ -113,6 +117,9 @@ def get_depth3arc5s(pname, filt_name):
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
 
+    if zp[0] is None:
+        return None
+
     # It is necessary verify if the correct noise is from t80tilesinf table
 
     noise = tile_info(pname, filt_name)[-1]
@@ -131,6 +138,9 @@ def get_deptharcsec2(pname, filt_name):
     tile = get_tile(pname, filt_name)
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
+
+    if zp[0] is None:
+        return None
 
     # It is necessary verify if the correct noise is from t80tilesinf table
 

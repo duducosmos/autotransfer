@@ -18,15 +18,15 @@ UpdateTile             :  12
 Complete               :  0
 """
 
-DB_NAME = "main_survey"
-DB_USER_NAME = "root"
-DB_PASSWORD = "jypesql"
-DB_ADDRESS = "127.0.0.1"
+DB_NAME = ""
+DB_USER_NAME = ""
+DB_PASSWORD = ""
+DB_ADDRESS = ""
 
 COADING_ERROR = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
 JYPE_VERSION = "MainSurvey"
-PATH_ROOT = "/home/ed"
+PATH_ROOT = "/mnt/public/jype"
 TILES_VERSION = "T01"
 RAW_PATH_PATTERN = "/mnt/images"
 INSTRUMENT_CONFIG_FILE = "./instr-t80cam.txt"
