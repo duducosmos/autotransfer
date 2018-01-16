@@ -92,7 +92,9 @@ def get_depth2fwhm5s(pname, filt_name):
     tile = get_tile(pname, filt_name)
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
-    noise = zp[1]
+
+    # It is necessary verify if the correct noise is from t80tilesinf table
+    noise = info[-1]
     depth2fwhm5s = -2.5 * log10(5 * float(noise) *
                                 sqrt((pow(float(fwhm_mean), 2)
                                       * pi) /
@@ -110,7 +112,10 @@ def get_depth3arc5s(pname, filt_name):
     tile = get_tile(pname, filt_name)
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
-    noise = zp[1]
+
+    # It is necessary verify if the correct noise is from t80tilesinf table
+
+    noise = tile_info(pname, filt_name)[-1]
     depth3arc5s = -2.5 * log10(5 * float(noise) * sqrt((2.25 *
                                                         pi) /
                                                        pow(pixscale, 2)
@@ -126,7 +131,10 @@ def get_deptharcsec2(pname, filt_name):
     tile = get_tile(pname, filt_name)
     pixscale = tile.PIXEL_SCALE
     zp = get_zp(tile.id)
-    noise = zp[1]
+
+    # It is necessary verify if the correct noise is from t80tilesinf table
+
+    noise = tile_info(pname, filt_name)[-1]
     deptharcsec2 = -2.5 * log10(5 * float(noise) * sqrt(1 / pow(pixscale, 2))
                                 ) + zp
     return deptharcsec2
@@ -148,11 +156,14 @@ def tile_info(pname, filt_name):
                              db.t80tilesinfo.FWHM_Min,
                              db.t80tilesinfo.FWHM_Max,
                              db.t80tilesinfo.Filter_ID,
-                             db.t80tilesinfo.MoffatBeta_Mean
+                             db.t80tilesinfo.MoffatBeta_Mean,
+                             db.t80tilesinfo.Noise
                              ).first()
 
     return [tile_info.id, tile_info.RefImage_ID, tile_info.FWHM_Min,
-            tile_info.FWHM_Max, tile_info.Filter_ID, tile_info.MoffatBeta_Mean]
+            tile_info.FWHM_Max, tile_info.Filter_ID, tile_info.MoffatBeta_Mean,
+            tile_info.Noise
+            ]
 
 
 if __name__ == "__main__":
